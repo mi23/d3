@@ -1,24 +1,32 @@
 //select svg container first
 const svg = d3.select('svg');
 
-d3.json('planets.json').then(data => {
+d3.json('menu.json').then(data => {
 
-    const circs = svg.selectAll('circle')
-    .data(data);
+const y =d3.scaleLinear()
+.domain([0,1000])
+.range([0,500]);
 
-    //add aatrs to cirs already in the DOM
-    circs.attr('cy', 200)
-    .attr('cx', d => d.distance)
-    .attr('r', d => d.radius)
-    .attr('fill', d=> d.fill);
+console.log(y(400))
+console.log(y(0))
+console.log(y(900))
 
-    circs.enter()
-    .append('circle')
-    .attr('cy', 200)
-    .attr('cx', d => d.distance)
-    .attr('r', d => d.radius)
-    .attr('fill', d=> d.fill);
-    
+//join the data to rects
+const rects = svg.selectAll('rect')
+.data(data)
+
+//give attributes to the first element in dom
+rects.attr('width', 50)
+.attr('height', d=> y(d.orders))
+.attr('fill', 'orange')
+.attr('x', (d,i) => i*70);
+
+rects.enter()
+.append('rect')
+.attr('width', 50)
+.attr('height', d=> y(d.orders))
+.attr('fill', 'orange')
+.attr('x', (d,i) => i*70);
 
 
 })
