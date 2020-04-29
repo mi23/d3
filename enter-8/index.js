@@ -10,9 +10,10 @@ const data= [
 
 const svg = d3.select('svg');
 
-//add attr to rects in the DOM
+//joins data to svg
 const rects = svg.selectAll('rect')
 .data(data )
+//add attr to rects in the DOM
 .attr('width', (d, i, n)=> d.width)
 .attr('height', d => d.height)
 .attr('fill', d => d.fill);
