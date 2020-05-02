@@ -9,9 +9,10 @@ const graphWidth = 600 - margin.left-margin.right;
 const graphHeight= 600 - margin.top - margin.bottom;
 
 const graph = svg.append('g')
-.attr('width'. graphWidth)
+.attr('width', graphWidth)
 .attr('height', graphHeight)
-.attr('transform', 'translate(${margin.left},${margin.top})')
+.attr('transform', `translate(${margin.left},${margin.top})`)
+
 
 d3.json('menu.json').then(data => {
 
@@ -29,7 +30,7 @@ const y =d3.scaleLinear()
 
 
 //join the data to rects
-const rects = graphWidth.selectAll('rect')
+const rects = graph.selectAll('rect')
 .data(data)
 
 //give attributes to the first element in dom
