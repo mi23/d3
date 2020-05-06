@@ -15,4 +15,9 @@
       "name": "veg surprise",
       "orders": 900
     }
+    ,
+    {
+      "name": "veg snail",
+      "orders": 1200
+    }
   ]
