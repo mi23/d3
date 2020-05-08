@@ -12,8 +12,33 @@
           
         
         </div>
-            
+     
         
+
+
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+  <script>
+    
+
+    var firebaseConfig = {
+  apiKey: "AIzaSyAdEcUW1_cqvKs5J00qd1NkHo8dAqUysgw",
+  authDomain: "udemy-d3-firebase-6c53c.firebaseapp.com",
+  databaseURL: "https://udemy-d3-firebase-6c53c.firebaseio.com",
+  projectId: "udemy-d3-firebase-6c53c",
+  storageBucket: "udemy-d3-firebase-6c53c.appspot.com",
+  messagingSenderId: "266614234282",
+  appId: "1:266614234282:web:c0cea4c5c39afa833e04d3",
+  measurementId: "G-1H9151E1R9"};
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+
 
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src = index.js> </script>
