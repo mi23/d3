@@ -18,17 +18,38 @@ const xAxisGroup =graph.append('g')
 .attr('transform', `translate(0, ${graphHeight}) `);
 const yAxisGroup =graph.append('g')
 
-d3.json('menu.json').then(data => {
-
-
+//scales
 const y =d3.scaleLinear()
-.domain([0,d3.max  (data, d => d.orders)])
 .range([graphHeight, 0]);
 
 const x = d3.scaleBand()
-.domain(data.map(item=>item.name))
 .range([0,graphWidth])
 .padding([0.2]);
+
+//update function
+const update =(data) => {
+    
+y.domain([0,d3.max  (data, d => d.orders)])
+
+
+
+x.domain(data.map(item=>item.name))
+
+
+
+}
+
+//new data source. havew replaced up to .then
+db.collection('dishes').get().then((res) => {
+
+var data = [];
+res.docs.forEach(doc => {
+    data.push(doc.data())
+})
+
+console.log(data)
+
+
 //.paddingInner(0.2)
 //.paddingOuter(0.2);
 
