@@ -87,6 +87,9 @@ res.docs.forEach(doc => {
     data.push(doc.data())
 })
 
+
+update(data);
+
 console.log(data)
 
 
