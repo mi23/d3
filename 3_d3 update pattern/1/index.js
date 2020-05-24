@@ -26,15 +26,55 @@ const x = d3.scaleBand()
 .range([0,graphWidth])
 .padding([0.2]);
 
-//update function
+// create axes
+const xAxis = d3.axisBottom(x)
+
+const yAxis = d3.axisLeft(y)
+.ticks(5)
+.tickFormat(d => d + ' orders');
+
+// update x axis text
+xAxisGroup.selectAll('text')
+    .attr('transform', 'rotate(-40)')
+    .attr('text-anchor', 'end')
+    .attr('fill', 'green' )
+
+
+//update function!!!!!!
 const update =(data) => {
     
 y.domain([0,d3.max  (data, d => d.orders)])
 
-
-
 x.domain(data.map(item=>item.name))
 
+//join the data to rects
+const rects = graph.selectAll('rect')
+.data(data)
+
+// remove exit selection
+rects.exit().remove();
+
+//update existing shapes
+rects.attr('width', x.bandwidth)
+.attr('height', d=> graphHeight - y(d.orders))
+.attr('fill', 'orange')
+.attr('x', d => x(d.name))
+.attr('y', d=> y(d.orders));
+
+
+//append enter selection to the dom
+rects.enter()
+.append('rect')
+.attr('width', x.bandwidth)
+.attr('height', d=> graphHeight- y(d.orders))
+.attr('fill', 'orange')
+.attr('x', d => x(d.name))
+.attr('y', d=> y(d.orders));
+
+// call axes. they are dependednt on data
+
+xAxisGroup.call(xAxis);
+yAxisGroup.call(yAxis);
 
 
 }
@@ -61,39 +101,11 @@ console.log(data)
 // console.log(extent)
 
 
-//join the data to rects
-const rects = graph.selectAll('rect')
-.data(data)
 
-//give attributes to the first element in dom
-rects.attr('width', x.bandwidth)
-.attr('height', d=> graphHeight - y(d.orders))
-.attr('fill', 'orange')
-.attr('x', d => x(d.name))
-.attr('y', d=> y(d.orders));
 
-rects.enter()
-.append('rect')
-.attr('width', x.bandwidth)
-.attr('height', d=> graphHeight- y(d.orders))
-.attr('fill', 'orange')
-.attr('x', d => x(d.name))
-.attr('y', d=> y(d.orders));
 
-// create and call axes. at the bottom as dependednt on data
-const xAxis = d3.axisBottom(x)
 
-const yAxis = d3.axisLeft(y)
-.ticks(5)
-.tickFormat(d => d + ' orders');
 
-xAxisGroup.call(xAxis);
-yAxisGroup.call(yAxis);
-
-xAxisGroup.selectAll('text')
-    .attr('transform', 'rotate(-40)')
-    .attr('text-anchor', 'end')
-    .attr('fill', 'green' )
 
 
 
