@@ -51,12 +51,19 @@ const x = d3.scaleBand()
 const rects = graph.selectAll('rect')
 .data(data)
 
-//give attributes to the first element in dom
+// remove exit selection
+rects.exit().remove;
+
+
+
+//update curret shapes in dom
 rects.attr('width', x.bandwidth)
 .attr('height', d=> graphHeight - y(d.orders))
 .attr('fill', 'orange')
 .attr('x', d => x(d.name))
 .attr('y', d=> y(d.orders));
+
+//append enter selectionto the DOM
 
 rects.enter()
 .append('rect')
@@ -65,6 +72,7 @@ rects.enter()
 .attr('fill', 'orange')
 .attr('x', d => x(d.name))
 .attr('y', d=> y(d.orders));
+
 
 // create and call axes. at the bottom as dependednt on data
 const xAxis = d3.axisBottom(x)
@@ -81,6 +89,26 @@ xAxisGroup.selectAll('text')
     .attr('text-anchor', 'end')
     .attr('fill', 'green' )
 
+// get data from firestore
+db.collection('dishes').get().then(res -> {
 
+    var data - [];
+    res.docs.forEach(doc => {
+        data.push(doc.data());
+
+        update(data);
+
+        d3.interval((0 => {
+            data.pop();
+            //update(data);
+
+        }, 3000);
+        
+
+
+    })
 
 })
+
+
+});
