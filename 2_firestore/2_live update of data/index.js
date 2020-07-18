@@ -75,17 +75,33 @@ const update = (data) => {
   yAxisGroup.call(yAxis);
 
 };
-
+//get data from Firestore
 var data = [];
 
 db.collection('dishes').onSnapshot(res => {
   
   res.docChanges().forEach(change => {
 
-    console.log(change.doc.data());
+    const doc = {...change.doc.data(), id: change.doc.id};
+
+    console.log(doc);
+
+    console.log(change);
+
+    switch(change.type) {
+      case 'added':
+        data.push(doc);
+        break;
+        case 'modified':
+          const index = data.findIndex(item => item.id ==doc.id);
+          break;
+          case 'removed':
+            data = data.filter(item => item.id !== doc.id);
+            break;
+    }
 
   });
 
-  // update(data);
+  update(data);
 
 });
