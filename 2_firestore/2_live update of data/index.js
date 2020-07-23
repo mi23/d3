@@ -77,17 +77,20 @@ const update = (data) => {
 };
 //get data from Firestore
 var data = [];
-
+//listener - real time
 db.collection('dishes').onSnapshot(res => {
   
+  //cycling through every change that occurs in the database
   res.docChanges().forEach(change => {
 
+    //creating a doc object based on that change that is inputing the data and the id of the object it changes
     const doc = {...change.doc.data(), id: change.doc.id};
 
     console.log(doc);
 
     console.log(change);
 
+    //checking the change type with the switch statement
     switch(change.type) {
       case 'added':
         data.push(doc);
@@ -98,10 +101,13 @@ db.collection('dishes').onSnapshot(res => {
           case 'removed':
             data = data.filter(item => item.id !== doc.id);
             break;
+            default:
+              break;
     }
 
   });
 
+  //calling the update funcyion that updates the data
   update(data);
 
 });
