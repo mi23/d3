@@ -57,21 +57,25 @@ rects.exit().remove();
 
 //update existing shapes in dom
 rects.attr('width', x.bandwidth)
-.attr('height', d=> graphHeight - y(d.orders))
+.attr('x', d => x(d.name))
 .attr('fill', 'orange')
 .transition(t)
-    .attr('x', d => x(d.name))
+    .attr('height', d=> graphHeight - y(d.orders))
     .attr('y', d=> y(d.orders));
 
 
-//append enter selection to the dom
+//append enter selection to the DOM 
+//for transition we first have to set starting conditions for graphHeight and y
+
 rects.enter()
 .append('rect')
 .attr('width', x.bandwidth)
-.attr('height', d=> graphHeight- y(d.orders))
+.attr('height',0)
 .attr('fill', 'orange')
+.attr('x', d => x(d.name))
+.attr('y', graphHeight)
 .transition(t)
-    .attr('x', d => x(d.name))
+    .attr('height', d=> graphHeight- y(d.orders))
     .attr('y', d=> y(d.orders));
 
 // call axes. they are dependednt on data
