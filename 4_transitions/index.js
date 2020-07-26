@@ -59,9 +59,9 @@ rects.exit().remove();
 rects.attr('width', x.bandwidth)
 .attr('x', d => x(d.name))
 .attr('fill', 'orange')
-.transition(t)
+/* .transition(t)
     .attr('height', d=> graphHeight - y(d.orders))
-    .attr('y', d=> y(d.orders));
+    .attr('y', d=> y(d.orders)); */
 
 
 //append enter selection to the DOM 
@@ -74,6 +74,7 @@ rects.enter()
 .attr('fill', 'orange')
 .attr('x', d => x(d.name))
 .attr('y', graphHeight)
+.merge(rects)
 .transition(t)
     .attr('height', d=> graphHeight- y(d.orders))
     .attr('y', d=> y(d.orders));
