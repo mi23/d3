@@ -39,7 +39,7 @@ xAxisGroup.selectAll('text')
     .attr('text-anchor', 'end')
     .attr('fill', 'green' )
 
-const t = d3.transition().duration(1500);
+const t = d3.transition().duration(2500);
 
 //update function!!!!!!
 const update =(data) => {
@@ -56,12 +56,13 @@ const rects = graph.selectAll('rect')
 rects.exit().remove();
 
 //update existing shapes in dom
-rects.attr('width', x.bandwidth)
+// rects.attr('width', x.bandwidth)
+rects.attr('width', 0)
 .attr('x', d => x(d.name))
 .attr('fill', 'orange')
-/* .transition(t)
+.transition(t)
     .attr('height', d=> graphHeight - y(d.orders))
-    .attr('y', d=> y(d.orders)); */
+    .attr('y', d=> y(d.orders)); 
 
 
 //append enter selection to the DOM 
@@ -69,13 +70,14 @@ rects.attr('width', x.bandwidth)
 
 rects.enter()
 .append('rect')
-.attr('width', x.bandwidth)
+// .attr('width', 0)
 .attr('height',0)
 .attr('fill', 'orange')
 .attr('x', d => x(d.name))
 .attr('y', graphHeight)
-.merge(rects)
+// .merge(rects)
 .transition(t)
+    .attrTween('width',  widthTween )
     .attr('height', d=> graphHeight- y(d.orders))
     .attr('y', d=> y(d.orders));
 
@@ -109,7 +111,7 @@ const widthTween = (d) => {
 
     //define interpolation
     //d3.interpolate returns a function which we call 'i'
-    let i = d3.interpolate(0, x.bandwidth);
+    let i = d3.interpolate(0, x.bandwidth());
 
     //
     //return a function which takes in a time ticker 't'
