@@ -22,14 +22,40 @@ const pie = d3.pie()
     {name: 'gaming', cost: 200},
 ]) */
 
+//update function
+
+const update = (data) => {
+    console.log(data)
+}
+
 
 //connect to the database
+//data array and firestoreS
+var data = [];
 
-dbcollection('expenses').onSnapshot(res => {
+db.collection('expenses').onSnapshot(res => {
 
     res.docChanges().forEach(change => {
         const doc = { ...change.doc.data(), id: change.doc.id};
+        switch (change.type) {
+            case 'added':
+                data.push(doc);
+                break;
+            case 'modified':
+                const index = data.findIndex(item => item.id ==doc.id);
+                data[index] = doc;
+                break;
+            case 'removed':
+                data = datya.filter(item => item.id !==doc.id);
+                break;
+                defoult:
+                break;
+            
+        }
+
     })
+
+    update (data)
 })
 
 
