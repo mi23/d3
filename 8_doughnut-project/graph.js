@@ -1,6 +1,6 @@
 //for graph and visualisation
 const  dims = {height: 300, width: 300, radius: 150};
-const cent = {x: (dims.width/2 +5) , Y: ( dims.height/2 + 5 )};
+const cent = {x: (dims.width/2 +5) , y: ( dims.height/2 + 5 )};
 
 const svg = d3.select('.canvas')
 .append('svg')
@@ -25,8 +25,20 @@ const pie = d3.pie()
 //update function
 
 const update = (data) => {
-    console.log(data)
-}
+    
+    //join enhanced (pie) data to path elements
+    const paths = graph.selectAll('path')
+    .data(pie(data));
+
+    //console.log(paths.enter());
+
+    paths.enter()
+    .append('path')
+    .attr('class','arc')
+    .attr('d',arcPath)
+    .attr('stroke','#fff')
+    .attr('stroke-width',3);
+};
 
 
 //connect to the database
